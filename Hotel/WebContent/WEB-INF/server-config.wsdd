@@ -1,0 +1,145 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="D:\CONSULTOR_JAVA\CASO_WEB_SERVICES\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Hotel\WEB-INF\attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="ReservationService" provider="java:RPC" style="wrapped" use="literal">
+  <ns2:operation name="addReservation" qname="ns1:addReservation" returnQName="ns1:addReservationReturn" returnType="xsd:boolean" soapAction="" xmlns:ns1="http://reservation.sample.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:roomNumber" type="xsd:int"/>
+   <ns2:parameter qname="ns1:guestName" type="xsd:string"/>
+   <ns2:parameter qname="ns1:reserved_from" type="xsd:dateTime"/>
+   <ns2:parameter qname="ns1:reserved_to" type="xsd:dateTime"/>
+   <ns3:fault class="com.sample.reservation.exception.ReservationManagementException" qname="ns1:fault" type="ns2:ReservationManagementException" xmlns:ns2="http://exception.reservation.sample.com" xmlns:ns3="http://xml.apache.org/axis/wsdd/"/>
+  </ns2:operation>
+  <ns1:operation name="getReservationDetails" qname="ns3:getReservationDetails" returnQName="ns3:getReservationDetailsReturn" returnType="ns4:Reservation" soapAction="" xmlns:ns3="http://reservation.sample.com" xmlns:ns4="http://dto.reservation.sample.com">
+   <ns1:parameter qname="ns3:RoomNumber" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.ReservationManagementException" qname="ns3:fault" type="ns5:ReservationManagementException" xmlns:ns5="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:operation name="removeReservation" qname="ns6:removeReservation" soapAction="" xmlns:ns6="http://reservation.sample.com">
+   <ns1:parameter qname="ns6:reservationID" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.ReservationManagementException" qname="ns6:fault" type="ns7:ReservationManagementException" xmlns:ns7="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="addReservation removeReservation getReservationDetails"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="ReservationService"/>
+  <ns1:parameter name="className" value="com.sample.reservation.ReservationService"/>
+  <ns1:parameter name="wsdlServicePort" value="ReservationService"/>
+  <ns1:parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="ReservationServiceService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:Reservation" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.dto.Reservation" xmlns:ns8="http://dto.reservation.sample.com"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns9:ReservationManagementException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.exception.ReservationManagementException" xmlns:ns9="http://exception.reservation.sample.com"/>
+ </ns1:service>
+ <ns1:service name="RoomManagementService" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="addRoom" qname="ns10:addRoom" returnQName="ns10:addRoomReturn" returnType="xsd:boolean" soapAction="" xmlns:ns10="http://reservation.sample.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns10:roomNumber" type="xsd:int"/>
+   <ns1:parameter qname="ns10:roomType" type="xsd:string"/>
+   <ns1:parameter qname="ns10:roomSize" type="xsd:string"/>
+   <ns1:fault class="com.sample.reservation.exception.RoomManagementException" qname="ns10:fault" type="ns11:RoomManagementException" xmlns:ns11="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:operation name="getRoomDetails" qname="ns12:getRoomDetails" returnQName="ns12:getRoomDetailsReturn" returnType="ns13:Room" soapAction="" xmlns:ns12="http://reservation.sample.com" xmlns:ns13="http://dto.reservation.sample.com">
+   <ns1:parameter qname="ns12:roomNumber" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.RoomManagementException" qname="ns12:fault" type="ns14:RoomManagementException" xmlns:ns14="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:operation name="deleteRoom" qname="ns15:deleteRoom" soapAction="" xmlns:ns15="http://reservation.sample.com">
+   <ns1:parameter qname="ns15:roomNumber" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.RoomManagementException" qname="ns15:fault" type="ns16:RoomManagementException" xmlns:ns16="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="getRoomDetails addRoom deleteRoom"/>
+  <ns1:parameter name="wsdlPortType" value="RoomManagementService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+  <ns1:parameter name="wsdlServicePort" value="RoomManagementService"/>
+  <ns1:parameter name="className" value="com.sample.reservation.RoomManagementService"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="RoomManagementServiceService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns17:RoomManagementException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.exception.RoomManagementException" xmlns:ns17="http://exception.reservation.sample.com"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns18:Room" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.dto.Room" xmlns:ns18="http://dto.reservation.sample.com"/>
+ </ns1:service>
+ <ns1:service name="OtroServicio" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="reservaUpc" qname="ns19:reservaUpc" returnQName="ns19:reservaUpcReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://reservation.sample.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns19:nombre" type="xsd:string"/>
+   <ns1:parameter qname="ns19:numeroHabitacion" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="reservaUpc"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="OtroServicio"/>
+  <ns1:parameter name="className" value="com.sample.reservation.OtroServicio"/>
+  <ns1:parameter name="wsdlServicePort" value="OtroServicio"/>
+  <ns1:parameter name="schemaQualified" value="http://reservation.sample.com"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="OtroServicioService"/>
+ </ns1:service>
+ <ns1:service name="GuestManagementService" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="addGuest" qname="ns20:addGuest" returnQName="ns20:addGuestReturn" returnType="xsd:boolean" soapAction="" xmlns:ns20="http://reservation.sample.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns20:name" type="xsd:string"/>
+   <ns1:parameter qname="ns20:address" type="xsd:string"/>
+   <ns1:parameter qname="ns20:age" type="xsd:int"/>
+   <ns1:fault class="com.sample.reservation.exception.GuestManagementException" qname="ns20:fault" type="ns21:GuestManagementException" xmlns:ns21="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:operation name="getGuestDetails" qname="ns22:getGuestDetails" returnQName="ns22:getGuestDetailsReturn" returnType="ns23:Guest" soapAction="" xmlns:ns22="http://reservation.sample.com" xmlns:ns23="http://dto.reservation.sample.com">
+   <ns1:parameter qname="ns22:guestName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.GuestManagementException" qname="ns22:fault" type="ns24:GuestManagementException" xmlns:ns24="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:operation name="deleteGuest" qname="ns25:deleteGuest" soapAction="" xmlns:ns25="http://reservation.sample.com">
+   <ns1:parameter qname="ns25:guestName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:fault class="com.sample.reservation.exception.GuestManagementException" qname="ns25:fault" type="ns26:GuestManagementException" xmlns:ns26="http://exception.reservation.sample.com"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="deleteGuest getGuestDetails addGuest"/>
+  <ns1:parameter name="wsdlPortType" value="GuestManagementService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+  <ns1:parameter name="wsdlServicePort" value="GuestManagementService"/>
+  <ns1:parameter name="className" value="com.sample.reservation.GuestManagementService"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="GuestManagementServiceService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns27:Guest" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.dto.Guest" xmlns:ns27="http://dto.reservation.sample.com"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns28:GuestManagementException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.sample.reservation.exception.GuestManagementException" xmlns:ns28="http://exception.reservation.sample.com"/>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>

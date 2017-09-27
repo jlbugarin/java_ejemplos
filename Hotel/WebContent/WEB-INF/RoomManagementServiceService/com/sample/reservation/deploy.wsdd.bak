@@ -1,0 +1,56 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from RoomManagementServiceService WSDL service -->
+
+  <service name="RoomManagementService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+      <parameter name="wsdlServiceElement" value="RoomManagementServiceService"/>
+      <parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+      <parameter name="wsdlServicePort" value="RoomManagementService"/>
+      <parameter name="className" value="com.sample.reservation.RoomManagementServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="RoomManagementService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="addRoom" qname="operNS:addRoom" xmlns:operNS="http://reservation.sample.com" returnQName="retNS:addRoomReturn" xmlns:retNS="http://reservation.sample.com" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:roomNumber" xmlns:pns="http://reservation.sample.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:roomType" xmlns:pns="http://reservation.sample.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:roomSize" xmlns:pns="http://reservation.sample.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="RoomManagementException" qname="fns:fault" xmlns:fns="http://reservation.sample.com" class="com.sample.reservation.exception.RoomManagementException" type="tns:RoomManagementException" xmlns:tns="http://exception.reservation.sample.com"/>
+      </operation>
+      <operation name="getRoomDetails" qname="operNS:getRoomDetails" xmlns:operNS="http://reservation.sample.com" returnQName="retNS:getRoomDetailsReturn" xmlns:retNS="http://reservation.sample.com" returnType="rtns:Room" xmlns:rtns="http://dto.reservation.sample.com" soapAction="" >
+        <parameter qname="pns:roomNumber" xmlns:pns="http://reservation.sample.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="RoomManagementException" qname="fns:fault" xmlns:fns="http://reservation.sample.com" class="com.sample.reservation.exception.RoomManagementException" type="tns:RoomManagementException" xmlns:tns="http://exception.reservation.sample.com"/>
+      </operation>
+      <operation name="deleteRoom" qname="operNS:deleteRoom" xmlns:operNS="http://reservation.sample.com" soapAction="" >
+        <parameter qname="pns:roomNumber" xmlns:pns="http://reservation.sample.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="RoomManagementException" qname="fns:fault" xmlns:fns="http://reservation.sample.com" class="com.sample.reservation.exception.RoomManagementException" type="tns:RoomManagementException" xmlns:tns="http://exception.reservation.sample.com"/>
+      </operation>
+      <parameter name="allowedMethods" value="getRoomDetails addRoom deleteRoom"/>
+
+      <typeMapping
+        xmlns:ns="http://exception.reservation.sample.com"
+        qname="ns:RoomManagementException"
+        type="java:com.sample.reservation.exception.RoomManagementException"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://dto.reservation.sample.com"
+        qname="ns:Room"
+        type="java:com.sample.reservation.dto.Room"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

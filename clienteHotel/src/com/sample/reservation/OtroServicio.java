@@ -1,0 +1,12 @@
+/**
+ * OtroServicio.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ */
+
+package com.sample.reservation;
+
+public interface OtroServicio extends java.rmi.Remote {
+    public java.lang.String reservaUpc(java.lang.String nombre, int numeroHabitacion) throws java.rmi.RemoteException;
+}

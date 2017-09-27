@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/com/sample/reservation/OtroServicio.java=UTF-8
+encoding//src/com/sample/reservation/OtroServicioService.java=UTF-8
+encoding//src/com/sample/reservation/OtroServicioServiceLocator.java=UTF-8
+encoding//src/com/sample/reservation/OtroServicioSoapBindingStub.java=UTF-8
+encoding//src/com/sample/reservation/ReservationService.java=UTF-8
+encoding//src/com/sample/reservation/ReservationServiceService.java=UTF-8
+encoding//src/com/sample/reservation/ReservationServiceServiceLocator.java=UTF-8
+encoding//src/com/sample/reservation/ReservationServiceSoapBindingStub.java=UTF-8
+encoding//src/com/sample/reservation/dto/Reservation.java=UTF-8
+encoding//src/com/sample/reservation/exception/ReservationManagementException.java=UTF-8

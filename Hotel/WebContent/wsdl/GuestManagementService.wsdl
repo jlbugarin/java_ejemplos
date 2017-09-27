@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://reservation.sample.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://reservation.sample.com" xmlns:intf="http://reservation.sample.com" xmlns:tns1="http://exception.reservation.sample.com" xmlns:tns2="http://dto.reservation.sample.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://reservation.sample.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://exception.reservation.sample.com"/>
+   <import namespace="http://dto.reservation.sample.com"/>
+   <element name="addGuest">
+    <complexType>
+     <sequence>
+      <element name="name" type="xsd:string"/>
+      <element name="address" type="xsd:string"/>
+      <element name="age" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addGuestResponse">
+    <complexType>
+     <sequence>
+      <element name="addGuestReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="fault" type="tns1:GuestManagementException"/>
+   <element name="getGuestDetails">
+    <complexType>
+     <sequence>
+      <element name="guestName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGuestDetailsResponse">
+    <complexType>
+     <sequence>
+      <element name="getGuestDetailsReturn" type="tns2:Guest"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteGuest">
+    <complexType>
+     <sequence>
+      <element name="guestName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteGuestResponse">
+    <complexType/>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://exception.reservation.sample.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://dto.reservation.sample.com"/>
+   <complexType name="GuestManagementException">
+    <sequence>
+     <element name="message" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://dto.reservation.sample.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://exception.reservation.sample.com"/>
+   <complexType name="Guest">
+    <sequence>
+     <element name="address" nillable="true" type="xsd:string"/>
+     <element name="age" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="deleteGuestResponse">
+
+      <wsdl:part element="impl:deleteGuestResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addGuestResponse">
+
+      <wsdl:part element="impl:addGuestResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteGuestRequest">
+
+      <wsdl:part element="impl:deleteGuest" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="GuestManagementException">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addGuestRequest">
+
+      <wsdl:part element="impl:addGuest" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGuestDetailsResponse">
+
+      <wsdl:part element="impl:getGuestDetailsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGuestDetailsRequest">
+
+      <wsdl:part element="impl:getGuestDetails" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="GuestManagementService">
+
+      <wsdl:operation name="addGuest">
+
+         <wsdl:input message="impl:addGuestRequest" name="addGuestRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addGuestResponse" name="addGuestResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:GuestManagementException" name="GuestManagementException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGuestDetails">
+
+         <wsdl:input message="impl:getGuestDetailsRequest" name="getGuestDetailsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getGuestDetailsResponse" name="getGuestDetailsResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:GuestManagementException" name="GuestManagementException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteGuest">
+
+         <wsdl:input message="impl:deleteGuestRequest" name="deleteGuestRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteGuestResponse" name="deleteGuestResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:GuestManagementException" name="GuestManagementException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="GuestManagementServiceSoapBinding" type="impl:GuestManagementService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addGuest">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addGuestRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addGuestResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="GuestManagementException">
+
+            <wsdlsoap:fault name="GuestManagementException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGuestDetails">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGuestDetailsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGuestDetailsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="GuestManagementException">
+
+            <wsdlsoap:fault name="GuestManagementException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteGuest">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteGuestRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteGuestResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="GuestManagementException">
+
+            <wsdlsoap:fault name="GuestManagementException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="GuestManagementServiceService">
+
+      <wsdl:port binding="impl:GuestManagementServiceSoapBinding" name="GuestManagementService">
+
+         <wsdlsoap:address location="http://localhost:9080/Hotel/services/GuestManagementService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

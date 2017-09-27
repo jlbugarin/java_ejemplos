@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from GuestManagementServiceService WSDL service -->
+
+  <service name="GuestManagementService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+      <parameter name="wsdlServiceElement" value="GuestManagementServiceService"/>
+      <parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+      <parameter name="wsdlServicePort" value="GuestManagementService"/>
+      <parameter name="className" value="com.sample.reservation.GuestManagementService"/>
+      <parameter name="wsdlPortType" value="GuestManagementService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://reservation.sample.com" xmlns:retNS="http://reservation.sample.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addGuest" qname="operNS:addGuest" returnQName="retNS:addGuestReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:address" type="tns:string"/>
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:age" type="tns:int"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="GuestManagementException" qname="fns:fault" class="com.sample.reservation.exception.GuestManagementException" type="tns:GuestManagementException"/>
+      </operation>
+      <operation xmlns:operNS="http://reservation.sample.com" xmlns:retNS="http://reservation.sample.com" xmlns:rtns="http://dto.reservation.sample.com" name="getGuestDetails" qname="operNS:getGuestDetails" returnQName="retNS:getGuestDetailsReturn" returnType="rtns:Guest" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:guestName" type="tns:string"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="GuestManagementException" qname="fns:fault" class="com.sample.reservation.exception.GuestManagementException" type="tns:GuestManagementException"/>
+      </operation>
+      <operation xmlns:operNS="http://reservation.sample.com" name="deleteGuest" qname="operNS:deleteGuest" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:guestName" type="tns:string"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="GuestManagementException" qname="fns:fault" class="com.sample.reservation.exception.GuestManagementException" type="tns:GuestManagementException"/>
+      </operation>
+      <parameter name="allowedMethods" value="deleteGuest getGuestDetails addGuest"/>
+
+      <typeMapping xmlns:ns="http://dto.reservation.sample.com" qname="ns:Guest" type="java:com.sample.reservation.dto.Guest" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://exception.reservation.sample.com" qname="ns:GuestManagementException" type="java:com.sample.reservation.exception.GuestManagementException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

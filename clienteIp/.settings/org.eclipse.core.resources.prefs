@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/net/webservicex/www/GeoIP.java=UTF-8
+encoding//src/net/webservicex/www/GeoIPService.java=UTF-8
+encoding//src/net/webservicex/www/GeoIPServiceLocator.java=UTF-8
+encoding//src/net/webservicex/www/GeoIPServiceSoap.java=UTF-8
+encoding//src/net/webservicex/www/GeoIPServiceSoapStub.java=UTF-8

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ReservationServiceService WSDL service -->
+
+  <service name="ReservationService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://reservation.sample.com"/>
+      <parameter name="wsdlServiceElement" value="ReservationServiceService"/>
+      <parameter name="schemaQualified" value="http://reservation.sample.com,http://dto.reservation.sample.com,http://exception.reservation.sample.com"/>
+      <parameter name="wsdlServicePort" value="ReservationService"/>
+      <parameter name="className" value="com.sample.reservation.ReservationService"/>
+      <parameter name="wsdlPortType" value="ReservationService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://reservation.sample.com" xmlns:retNS="http://reservation.sample.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addReservation" qname="operNS:addReservation" returnQName="retNS:addReservationReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:roomNumber" type="tns:int"/>
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:guestName" type="tns:string"/>
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:reserved_from" type="tns:dateTime"/>
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:reserved_to" type="tns:dateTime"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="ReservationManagementException" qname="fns:fault" class="com.sample.reservation.exception.ReservationManagementException" type="tns:ReservationManagementException"/>
+      </operation>
+      <operation xmlns:operNS="http://reservation.sample.com" xmlns:retNS="http://reservation.sample.com" xmlns:rtns="http://dto.reservation.sample.com" name="getReservationDetails" qname="operNS:getReservationDetails" returnQName="retNS:getReservationDetailsReturn" returnType="rtns:Reservation" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:RoomNumber" type="tns:int"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="ReservationManagementException" qname="fns:fault" class="com.sample.reservation.exception.ReservationManagementException" type="tns:ReservationManagementException"/>
+      </operation>
+      <operation xmlns:operNS="http://reservation.sample.com" name="removeReservation" qname="operNS:removeReservation" soapAction="">
+        <parameter xmlns:pns="http://reservation.sample.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:reservationID" type="tns:int"/>
+        <fault xmlns:fns="http://reservation.sample.com" xmlns:tns="http://exception.reservation.sample.com" name="ReservationManagementException" qname="fns:fault" class="com.sample.reservation.exception.ReservationManagementException" type="tns:ReservationManagementException"/>
+      </operation>
+      <parameter name="allowedMethods" value="addReservation removeReservation getReservationDetails"/>
+
+      <typeMapping xmlns:ns="http://dto.reservation.sample.com" qname="ns:Reservation" type="java:com.sample.reservation.dto.Reservation" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://exception.reservation.sample.com" qname="ns:ReservationManagementException" type="java:com.sample.reservation.exception.ReservationManagementException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
