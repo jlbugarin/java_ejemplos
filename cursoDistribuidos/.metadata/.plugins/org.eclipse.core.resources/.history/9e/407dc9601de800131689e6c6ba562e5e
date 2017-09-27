@@ -1,0 +1,10 @@
+package pe.com.iluminatic.servicio;
+
+public class ServicioEmail {
+
+	public String enviarMail(String email, String mensaje){
+		
+		
+	}
+	
+}

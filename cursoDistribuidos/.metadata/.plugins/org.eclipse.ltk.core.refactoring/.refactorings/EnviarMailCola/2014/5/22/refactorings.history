@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;pe.com.iluminatic.enviar&apos; to &apos;pe.com.iluminatic.correo&apos;&#x0D;&#x0A;- Original project: &apos;EnviarMailCola&apos;&#x0D;&#x0A;- Original element: &apos;EnviarMailCola/src/pe.com.iluminatic.enviar&apos;&#x0D;&#x0A;- Renamed element: &apos;EnviarMailCola/src/pe.com.iluminatic.correo&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;pe.com.iluminatic.enviar&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;pe.com.iluminatic.enviar" name="pe.com.iluminatic.correo" qualified="false" references="true" stamp="1401470627905" textual="false" version="1.0"/>
+</session>

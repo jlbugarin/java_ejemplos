@@ -1,0 +1,118 @@
+package pe.com.iluminatic.correo;
+
+
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.jms.ConnectionFactory;
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import org.apache.activemq.ActiveMQConnection;
+import org.apache.activemq.ActiveMQConnectionFactory;
+import javax.jms.Message;
+
+public class EnviarMail {
+
+	public static String toEmail;
+	public static String mensajeCorreo;
+	
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//conectarse a la cola y leer cola
+		
+		
+		Vector listaEntregaCorreo = new Vector();
+	        listaEntregaCorreo.add(this.toEmail);
+	        if (sendMail("jbugarin@iluminatic.com", "PRUEBA JAVA", "mensaje de correo", listaEntregaCorreo, "mail.iluminatic.com", "%%santiago%")) {
+	            System.out.println("enviado");
+	        }
+
+	}
+	
+	  public static boolean sendMail(String from, String Subject, String text, Vector to, String host, String psw) {
+
+	        boolean res = true;
+	        try {
+	            Address address = null;
+	            //	   Get system properties
+	            Properties props = System.getProperties();
+	            //Setup mail server
+	            props.put("mail.smtp.host", host);
+	            props.put("mail.smtp.auth", "true");
+	            props.put("mail.smtp.starttls.enable", "false");
+	            props.put("mail.smtp.ssl.enable", "true");
+	            props.put("mail.smtp.port", "25");
+	            //		  Setup authentication, get session
+	            Session session = Session.getInstance(props, new SMTPAuthentication(from, psw));
+	            session.setDebug(true);
+	            //Define message
+	            MimeMessage message = new MimeMessage(session);
+	            message.setFrom(new InternetAddress(from));
+
+	            InternetAddress[] correos = new InternetAddress[to.size()];
+	            for (int x = 0; x < to.size(); x++) {
+	                correos[x] = new InternetAddress(to.get(x).toString());
+	            }
+	            message.addRecipients(javax.mail.Message.RecipientType.TO, correos);
+	            message.setSubject(Subject);
+
+	            MimeMultipart multipart = new MimeMultipart("related");
+	            BodyPart messageBodyPart = new MimeBodyPart();
+	            messageBodyPart.setContent(text, "text/html");
+	            multipart.addBodyPart(messageBodyPart);
+	            message.setContent(multipart);
+	            //message.setContent(text, "text/html");
+	            Transport t = session.getTransport("smtp");
+	            t.connect();
+	            t.send(message, message.getAllRecipients());
+	            t.close();
+	        } catch (Exception e) {
+	            res = false;
+	            e.printStackTrace();
+	        }
+	        return res;
+	    }
+
+	  public static void leerMensajeCola() throws JMSException{
+		  
+		// Create a ConnectionFactory
+					ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+							"admin", "admin", ActiveMQConnection.DEFAULT_BROKER_URL);
+					// Create a Connection
+					Connection connection = connectionFactory.createConnection();
+					connection.start();
+					// Create a Session
+					Session session = connection.createSession(false,
+							Session.AUTO_ACKNOWLEDGE);
+					// Create the destination
+					Destination destination = session.createQueue("foo.bar");
+					// Create a MessageConsumer from the Session to the Queue
+					MessageConsumer consumer = session.createConsumer(destination);
+					// Wait for a message
+					Message message = consumer.receive(1000);
+					if (message instanceof TextMessage) {
+						TextMessage textMessage = (TextMessage) message;
+						String text = textMessage.getText();
+						System.out.println("Text Message is " + text);
+					}
+					else {
+						System.out.println(message);
+					}
+					consumer.close();
+					session.close();
+					connection.close();
+		  
+	  }
+}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://servicio.iluminatic.com.pe" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://servicio.iluminatic.com.pe" xmlns:intf="http://servicio.iluminatic.com.pe" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://servicio.iluminatic.com.pe" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="enviarMail">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+      <element name="mensaje" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="enviarMailResponse">
+    <complexType>
+     <sequence>
+      <element name="enviarMailReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="enviarMailRequest">
+
+      <wsdl:part element="impl:enviarMail" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="enviarMailResponse">
+
+      <wsdl:part element="impl:enviarMailResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ServicioEmail">
+
+      <wsdl:operation name="enviarMail">
+
+         <wsdl:input message="impl:enviarMailRequest" name="enviarMailRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:enviarMailResponse" name="enviarMailResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ServicioEmailSoapBinding" type="impl:ServicioEmail">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="enviarMail">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="enviarMailRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="enviarMailResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ServicioEmailService">
+
+      <wsdl:port binding="impl:ServicioEmailSoapBinding" name="ServicioEmail">
+
+         <wsdlsoap:address location="http://localhost:8080/ServicioEmail/services/ServicioEmail"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

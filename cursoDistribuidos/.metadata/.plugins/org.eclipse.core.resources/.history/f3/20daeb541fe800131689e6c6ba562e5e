@@ -1,0 +1,5 @@
+package pe.com.iluminatic.correo;
+
+public class SMTPAuthentication {
+
+}

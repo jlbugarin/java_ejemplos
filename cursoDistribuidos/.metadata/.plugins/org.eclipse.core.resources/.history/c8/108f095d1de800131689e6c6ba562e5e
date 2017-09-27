@@ -1,0 +1,5 @@
+package pe.com.iluminatic.servicio;
+
+public class ServicioEmail {
+
+}
