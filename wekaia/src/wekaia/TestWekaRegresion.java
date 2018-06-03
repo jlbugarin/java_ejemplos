@@ -8,7 +8,6 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 public class TestWekaRegresion {
@@ -17,10 +16,21 @@ public class TestWekaRegresion {
 		// TODO Auto-generated method stub
 		/*
 		 * Load data
+		 * 
+Compacidad relativa
+X2 área de superficie
+X3 área de la pared
+X4 Área de techo
+X5 Altura general
+Orientación X6
+X7 Área de acristalamiento
+Distribución del área de acristalamiento X8
+Carga de calentamiento Y1
+Carga de enfriamiento Y2
 		 */
 		CSVLoader loader = new CSVLoader();
 		loader.setFieldSeparator(",");
-		loader.setSource(new File("f://ENB2012_data.csv"));
+		loader.setSource(new File("G://test_ia//ENB2012_data.csv"));
 		Instances data = loader.getDataSet();
 
 		// System.out.println(data);
