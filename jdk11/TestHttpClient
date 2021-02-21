@@ -12,7 +12,7 @@ public class TestHttpClient {
 		// TODO Auto-generated method stub
 		var httpClient = HttpClient.newHttpClient();
 
-		var request = HttpRequest.newBuilder(URI.create("https://api.nasa.gov/planetary/apod?api_key=BNnOMpUYGOuT2y8VzMDYzeuqD7ZDmMlZclTCGO7T")).build();
+		var request = HttpRequest.newBuilder(URI.create("https://api.nasa.gov/planetary/apod?api_key=24BNnOMpUYGOuT2y8VzMDYzeuqD7ZDmMlZclTCGO7T")).build();
 
 		var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
